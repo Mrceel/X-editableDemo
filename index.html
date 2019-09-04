@@ -22,8 +22,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <!-- <input type="file" multiple id="inp">
-                <button>submit</button> -->
                 <div>
                     <span id="cel">ceel</sp>
                 </div>
@@ -57,31 +55,6 @@
         $('#cel').on('shown', (e, editable) => { //弹出框显示时触发
             console.log('shown,', e, editable)
             editable.input.$input.val('overwriting value of input..'); //可以给input设置默认值
-        })
-        // $('#cel').editable();
-        $('button').click(()=>{
-            const file_ = $('#inp').get(0).files
-            let formdata = new FormData()
-            for (let k = 0; k < file_.length; k++) {
-                const element = file_[k];
-                formdata.append('avatar', element)
-            }
-
-            var xhr = new XMLHttpRequest();
- 
-            xhr.open("post", 'http://localhost:3001/', true);
-
-            xhr.onload = function (data) {
-                console.log(xhr.responseText)
-            };
-
-            xhr.send(formdata);
-            // $.post("http://localhost:3001/", formdata,
-            // function (data, textStatus, jqXHR) {
-            //     console.log(data, textStatus,jqXHR)
-            // },
-            // "string"
-        // );
         })
         
     </script>
