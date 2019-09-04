@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="./bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+
+<script src="e:/accumulate/plugin/jquery/jquery-3.3.1.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+<script src="./bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <input type="file" multiple id="inp">
+                <button>submit</button> -->
+                <div>
+                    <span id="cel">ceel</sp>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script>
+        $('#cel').editable({
+            type: 'text',
+            title: 'mrceel',
+            disabled: false,           //是否禁用编辑
+            mode: 'popup', //popup | inline
+            placement: 'bottom', // top | left | right | bottom
+            validate: function (value) { //字段验证
+                if (!$.trim(value)) {
+                    return '不能为空';
+                }
+            },
+            display: function(value){ // 格式化显示 $(this) == $('#cel')
+                // value 原始值
+                $(this).text(value + '$');
+            },
+        });
+
+        $('#cel').on('save', function(e, params) { // 保存时触发
+            alert('Saved value: ' + params.newValue);
+        });
+
+        $('#cel').on('shown', (e, editable) => { //弹出框显示时触发
+            console.log('shown,', e, editable)
+            editable.input.$input.val('overwriting value of input..'); //可以给input设置默认值
+        })
+        // $('#cel').editable();
+        $('button').click(()=>{
+            const file_ = $('#inp').get(0).files
+            let formdata = new FormData()
+            for (let k = 0; k < file_.length; k++) {
+                const element = file_[k];
+                formdata.append('avatar', element)
+            }
+
+            var xhr = new XMLHttpRequest();
+ 
+            xhr.open("post", 'http://localhost:3001/', true);
+
+            xhr.onload = function (data) {
+                console.log(xhr.responseText)
+            };
+
+            xhr.send(formdata);
+            // $.post("http://localhost:3001/", formdata,
+            // function (data, textStatus, jqXHR) {
+            //     console.log(data, textStatus,jqXHR)
+            // },
+            // "string"
+        // );
+        })
+        
+    </script>
+
+</body>
+
+</html>
